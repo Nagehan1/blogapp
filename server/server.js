@@ -18,22 +18,24 @@ pool = new Pool({
   port: 5433,
 });
 
-
 app.post(
   "/register",
   [
-    check("email", "please write valid email addres").isEmail(),
-    check("password", "please write valid password").isLength({ min: 6 }),
-    check("username", "please write valid name").isLength({ min: 3 }),
-    check("is_admin").isBoolean(),
+    check("email", "Please include a valid email").isEmail(),
+    check(
+      "password",
+      "Please enter a password with 6 or more characters"
+    ).isLength({ min: 6 }),
+    check("username", "Please enter a name").isLength({ min: 1 }),
+    //is_admin is a boolean value should be false default
+    check("is_admin", "Please enter a boolean value").isBoolean(),
   ],
-
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { email, password,username, is_admin } = req.body;
+    const { email, password, username, is_admin } = req.body;
     try {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -55,7 +57,7 @@ app.post(
           email,
           password,
           username,
-          is_admin
+          is_admin,
         },
       });
     } catch (err) {
@@ -65,14 +67,12 @@ app.post(
     }
   }
 );
-
-
-
+// login user
 app.post(
   "/login",
   [
-    check("email", "please write valid email addres").isEmail(),
-    check("password", "please write valid password").isLength({ min: 6 }),
+    check("email", "Please include a valid email").isEmail(),
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -106,7 +106,7 @@ app.post(
           },
         },
         secret,
-        { expiresIn: "2h" }
+        { expiresIn: "1h" }
       );
       res.status(200).json({
         status: "success",
@@ -122,166 +122,8 @@ app.post(
     }
   }
 );
-
- 
-
-app.post( // blog olusturma
-  "/blog",
-  [
-    check("title", "Please enter a title").isLength({ min: 1 }),
-    check("content", "Please enter some content").isLength({ min: 1 }),
-    check("author", "Please enter an author").isLength({ min: 1 }),
-  ],
-  async (req, res) => {
-    //only admin can create a blog post
-    jwt.verify(req.headers.authorization, secret, async (error, decoded) => {  //jwt var mi
-      if (error) {
-        res.status(401).json({ error: "Unauthorized" });
-      } else {
-        if (!decoded.user.is_admin) { //admin mi ?
-          res.status(401).json({ error: "Unauthorized" });
-          return;
-        }
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) { // checkpoint k/
-          return res.status(400).json({ errors: errors.array() });
-        }
-        const { title, content, author } = req.body;
-        try {
-          const { rows } = await pool.query(
-            "INSERT INTO blog_posts (title, content, author) VALUES ($1, $2, $3) RETURNING *",
-            [title, content, author]
-          );
-          res.status(201).json({
-            status: "success",
-            message: "Blog post created",
-            data: {
-              id: rows[0].id,
-              title: rows[0].title,
-              content: rows[0].content,
-              author:rows[0].author
-            },
-          });
-        } catch (err) {
-          console.error(err.message);
-          res.status(500).send("Server error");
-        }
-      }
-    });
-  }
-);
-// get all blog posts
-app.get("/blog", async (req, res) => {
-        try {
-            const {rows} = await pool.query("SELECT * FROM blog_posts");
-            res.status(200).json({
-                status: "success",
-                message: "All blog posts",
-                data: rows,
-            });
-        } catch (err) {
-            console.error(err.message);
-            res.status(500).send("Server error");
-        }
-    }
-);
-app.get("/blog/:id", async (req, res) => {
-  try {
-    const { rows } = await pool.query(
-      "SELECT * FROM blog_posts WHERE id = $1",
-      [req.params.id]
-    );
-    if (rows.length === 0) {
-      return res.status(404).json({
-        status: "error",
-        message: "Blog post not found",
-      });
-    }
-    res.status(200).json({
-      status: "success",
-      message: "Blog post found",
-      data: rows[0],
-    });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
-// update a blog post
-app.put("/blog/:id", async (req, res) => {
-  //only admin can update a blog post
-  jwt.verify(req.headers.authorization, secret, async (error, decoded) => {
-    if (error) {
-      res.status(401).json({ error: "Unauthorized" });
-    } else {
-      if (!decoded.user.is_admin) {
-        res.status(401).json({ error: "Unauthorized" });
-        return;
-      }
-      const { title, content, author } = req.body;
-      try {
-        const { rows } = await pool.query(
-          "UPDATE blog_posts SET title = $1, content = $2, author = $3 WHERE id = $4 RETURNING *",
-          [title, content, author, req.params.id]
-        );
-        if (rows.length === 0) {
-          return res.status(404).json({
-            status: "error",
-            message: "Blog post not found",
-          });
-        }
-        res.status(200).json({
-          status: "success",
-          message: "Blog post updated",
-          data: rows[0],
-        });
-      } catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server error");
-      }
-    }
-  });
-});
-// delete a blog post
-app.delete("/blog/:id", async (req, res) => {
-  //only admin can delete a blog post
-  jwt.verify(req.headers.authorization, secret, async (error, decoded) => {
-    if (error) {
-      res.status(401).json({ error: "Unauthorized" });
-    } else {
-      if (!decoded.user.is_admin) {
-        res.status(401).json({ error: "Unauthorized" });
-        return;
-      }
-      try {
-        const { rows } = await pool.query(
-          "DELETE FROM blog_posts WHERE id = $1 RETURNING *",
-          [req.params.id]
-        );
-        if (rows.length === 0) {
-          return res.status(404).json({
-            status: "error",
-            message: "Blog post not found",
-          });
-        }
-        res.status(200).json({
-          status: "success",
-          message: "Blog post deleted",
-          data: rows[0],
-        });
-      } catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server error");
-      }
-    }
-  });
-});
- 
-
-
-
-
-app.get("/users", async (req, res) => {  //users 
+// get all users
+app.get("/users", async (req, res) => {
   //only admin can get all users
   jwt.verify(req.headers.authorization, secret, async (error, decoded) => {
     if (error) {
@@ -347,11 +189,11 @@ app.put("/users/:id", async (req, res) => {
         res.status(401).json({ error: "Unauthorized" });
         return;
       }
-      const { name, email, address, phone } = req.body;
+      const { username, email, password, is_admin } = req.body;
       try {
         const { rows } = await pool.query(
-          "UPDATE users SET name = $1, email = $2, address = $3, phone = $4 WHERE id = $5 RETURNING *",
-          [name, email, address, phone, req.params.id]
+          "UPDATE users SET username = $1, email = $2, password = $3, is_admin = $4 WHERE id = $5 RETURNING *",
+          [username, email, password, is_admin, req.params.id]
         );
         res.status(200).json({
           status: "success",
@@ -391,7 +233,191 @@ app.delete("/users/:id", async (req, res) => {
 });
 
 
-
-
-app.listen(3001, () => {
-    console.log("Server is running on port 3001");})
+// create a blog post
+app.post(
+    "/blog",
+    [
+        check("title", "Please enter a title").isLength({min: 1}),
+        check("content", "Please enter some content").isLength({min: 1}),
+        check("author", "Please enter an author").isLength({min: 1}),
+    ],
+    async (req, res) => {
+        //only admin can create a blog post
+        jwt.verify(req.headers.authorization, secret, async (error, decoded) => {
+            if (error) {
+                res.status(401).json({error: "Unauthorized"});
+            } else {
+                if (!decoded.user.is_admin) {
+                    res.status(401).json({error: "Unauthorized"});
+                    return;
+                }
+                const errors = validationResult(req);
+                if (!errors.isEmpty()) {
+                    return res.status(400).json({errors: errors.array()});
+                }
+                const {title, content, author, image_url} = req.body;
+                try {
+                    const {rows} = await pool.query(
+                        //image_url
+                        "insert into blog_posts (title,content,author,image_url) values ($1,$2,$3,$4) RETURNING *",
+                        [title, content, author, image_url]
+                    );
+                    res.status(201).json({
+                        status: "success",
+                        message: "Blog post created",
+                        data: {
+                            id: rows[0].id,
+                            title: rows[0].title,
+                            content: rows[0].content,
+                            author: rows[0].author,
+                            image_url: rows[0].image_url,
+                            created_at: rows[0].created_at,
+                        }
+                    });
+                } catch (err) {
+                    console.error(err.message)
+                    res.status(500).send("Server error");
+                }
+            }
+        });
+    });
+// get all blog posts
+app.get("/blog", async (req, res) => {
+    jwt.verify(req.headers.authorization, secret, async (error, decoded) => {
+        const search = req.query.search || "";
+        if (error) {
+            res.status(401).json({error: "Unauthorized"});
+        }
+        try {
+            if (search) {
+                const {rows} = await pool.query(
+                  //search by title, content, author
+                    "SELECT * FROM blog_posts WHERE title ILIKE $1 OR content ILIKE $2 OR author ILIKE $3 ORDER BY created_at DESC",
+                    [`%${search}%`, `%${search}%`, `%${search}%`]
+                );
+                res.status(200).json({
+                    status: "success",
+                    message: "Blog posts",
+                    data: {
+                        rows
+                    }
+                });
+            } else {
+                const {rows} = await pool.query(
+                    "SELECT * FROM blog_posts ORDER BY created_at DESC"
+                );
+                res.status(200).json({
+                    status: "success",
+                    message: "Blog posts",
+                    data: {
+                        rows
+                    }
+                });
+            }
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send("Server error");
+        }
+    });
+});
+// get a blog post
+app.get("/blog/:id", async (req, res) => {
+        jwt.verify(req.headers.authorization, secret, async (error, decoded) => {
+            if (error) {
+                res.status(401).json({error: "Unauthorized"});
+            } else {
+                try {
+                    const {rows} = await pool.query(
+                        "SELECT * FROM blog_posts WHERE id = $1",
+                        [req.params.id]
+                    );
+                    if (rows.length === 0) {
+                        return res.status(404).json({
+                            status: "error",
+                            message: "Blog post not found",
+                        });
+                    }
+                    res.status(200).json({
+                        status: "success",
+                        message: "Blog post",
+                        data: {
+                            rows
+                        }
+                    });
+                } catch (err) {
+                    console.error(err.message);
+                    res.status(500).send("Server error");
+                }
+            }
+        });
+    }
+);
+// update a blog post
+app.put("/blog/:id", async (req, res) => {
+    //only admin can update a blog post
+    jwt.verify(req.headers.authorization, secret, async (error, decoded) => {
+        //update the blog post date when updated
+        if (error) {
+            res.status(401).json({error: "Unauthorized"});
+        }
+        try {
+            const {rows} = await pool.query(
+                "UPDATE blog_posts SET  title = $1, content = $2, author=$3, created_at = NOW() WHERE id = $4 RETURNING *",
+                [req.body.title, req.body.content, req.body.author, req.params.id]
+            );
+            if (rows.length === 0) {
+                return res.status(404).json({
+                    status: "error",
+                    message: "Blog post not found",
+                });
+            }
+            res.status(200).json({
+                status: "success",
+                message: "Blog post updated",
+                data: {
+                    rows
+                }
+            });
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send("Server error");
+        }
+    });
+});
+// delete a blog post
+app.delete("/blog/:id", async (req, res) => {
+    //only admin can delete a blog post
+    jwt.verify(req.headers.authorization, secret, async (error, decoded) => {
+        if (error) {
+            res.status(401).json({error: "Unauthorized"});
+        } else {
+            if (!decoded.user.is_admin) {
+                res.status(401).json({error: "Unauthorized"});
+                return;
+            }
+            try {
+                const {rows} = await pool.query(
+                    "DELETE FROM blog_posts WHERE id = $1 RETURNING *",
+                    [req.params.id]
+                );
+                if (rows.length === 0) {
+                    return res.status(404).json({
+                        status: "error",
+                        message: "Blog post not found",
+                    });
+                }
+                res.status(200).json({
+                    status: "success",
+                    message: "Blog post deleted",
+                    data: rows[0],
+                });
+            } catch (err) {
+                console.error(err.message);
+                res.status(500).send("Server error");
+            }
+        }
+    });
+});
+app.listen(5000, () => {
+    console.log("Server is listening on port 5000");
+});
