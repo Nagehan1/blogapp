@@ -7,13 +7,13 @@ import Read from "./components/Read";
 import Logout from "./components/Logout";
 import Edit from "./components/Edit";
 import { Route, Routes } from "react-router";
-import {BrowserRouter} from "react-router-dom";
+// import {BrowserRouter} from "react-router-dom";
 import './App.css';
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <Routes>
           <Route path={"/"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
@@ -24,7 +24,7 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path={"/edit/:postId"} element={<Edit />} />
         </Routes>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </div>
   );
 }
