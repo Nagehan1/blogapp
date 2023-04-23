@@ -48,7 +48,7 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <h1 style={{ color: "goldenrod", textAlign: "center" }}>Posts</h1>
+            <h1 style={{ color: "goldenrod", textAlign: "center" }}>Ingiltere'de Yasam</h1>
             {loading ? (
               <h5 style={{ color: "goldenrod", textAlign: "center" }}>
                 loading...
