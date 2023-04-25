@@ -8,7 +8,7 @@ import Logout from "./components/Logout";
 import Edit from "./components/Edit";
 import { Route, Routes } from "react-router";
 // import {BrowserRouter} from "react-router-dom";
-import AboutMe from './components/AboutMe';
+// import AboutMe from './components/AboutMe';
 import './App.css';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <Route path={"/read/:postId"} element={<Read />} />
         <Route path="/logout" element={<Logout />} />
         <Route path={"/edit/:postId"} element={<Edit />} />
-        <Route path="/aboutme" element={<AboutMe />} />
+        {/* <Route path="/aboutme" element={<AboutMe />} /> */}
       </Routes>
       {/* </BrowserRouter> */}
     </div>

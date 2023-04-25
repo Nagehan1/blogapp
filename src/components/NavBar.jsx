@@ -27,11 +27,11 @@ function NavBar() {
                     Write
                   </NavLink>
                 </Nav.Item>
-                <Nav.Item>
+                {/* <Nav.Item>
                   <NavLink to="/aboutme" className="nav-link">
                     AboutMe
                   </NavLink>
-                </Nav.Item>
+                </Nav.Item> */}
                 <Nav.Item>
                   <NavLink to="/logout" className="nav-link" onClick={logout}>
                     Logout
@@ -50,11 +50,11 @@ function NavBar() {
                     Home
                   </NavLink>
                 </Nav.Item>
-                <Nav.Item>
+                {/* <Nav.Item>
                   <NavLink exact to="/aboutme" className="nav-link">
                     AboutMe
                   </NavLink>
-                </Nav.Item>
+                </Nav.Item> */}
                 <Nav.Item>
                   <NavLink to="/logout" className="nav-link" onClick={logout}>
                     Logout
