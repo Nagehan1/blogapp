@@ -64,7 +64,7 @@ function Home() {
                       <img
                         className={"card-img-top"}
                         src={post.image_url}
-                        alt="Card image cap"
+                        alt="Card cap"
                       />
                       <div className="card-body">
                         <h6 className="card-title mb-2 text-muted">
