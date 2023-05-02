@@ -55,8 +55,8 @@ function Home() {
               </h5>
             ) : (
               <div className="row">
-                {posts.map((post) => (
-                  <div className="col-md-4">
+                {posts.map((post,i) => (
+                  <div key = {i} className="col-md-4">
                     <div
                       className="card"
                       style={{ height: "30rem", width: "18rem", margin: "5px" }}

@@ -27,7 +27,7 @@ const Read = () => {
         setLoading(false);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
   console.log(post);
   const handleDelete = () => {
     fetch(`http://localhost:5000/blog/${id}`, {
@@ -107,7 +107,7 @@ const Read = () => {
                   className={"card-img-top"}
                   src={post.image_url}
                   style={{ height: "400px", width: "600px" }}
-                  alt="Card image cap"
+                  alt="Card cap"
                 />
               </div>
             </div>

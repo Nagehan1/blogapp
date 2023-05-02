@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "./NavBar";
-import { Form } from "react-bootstrap";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
@@ -35,7 +35,7 @@ const Edit = (props) => {
         setLoading(false);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
   console.log(post);
   //use put endpoint to update the post
   const handleUpdate = (e) => {

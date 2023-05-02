@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-require("dotenv").config();
+// require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -12,11 +12,11 @@ const secret = "secret";
 app.use(cors());
 app.use(express.json());
 pool = new Pool({
-  user: "postgres" || process.env.user,
-  host: "localhost" || process.env.host,
-  database: "blog" || process.env.database,
-  password: "nagehan123" || process.env.password,
-  port: 5433 || process.env.port,
+  user: "postgres" ,
+  host: "localhost" ,
+  database: "blog" ,
+  password: "nagehan123" ,
+  port: 5433 ,
 });
 
 
