@@ -12,12 +12,11 @@ const secret = "secret";
 app.use(cors());
 app.use(express.json());
 pool = new Pool({
-  user: "nagehan" ,
-  host: "18.196.138.205" ,
-  database: "blog_hbax" ,
-  password: "Q9Z687yJUpUL2W8DsH4rRBT6DolER1F1" ,
-  port: 5432 ,
- 
+  user: "nagehan",
+  host: "dpg-ch7s4dlgk4q7lmu0414g-a",
+  database: "blog_hbax",
+  password: "Q9Z687yJUpUL2W8DsH4rRBT6DolER1F1",
+  port: 5432,
 });
 
 
