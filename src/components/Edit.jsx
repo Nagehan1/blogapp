@@ -16,7 +16,7 @@ const Edit = (props) => {
   const [post, setPost] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
-    fetch(`http://localhost:5000/blog/${id}`, {
+    fetch(`https://myblog-5gjx.onrender.com/blog/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const Edit = (props) => {
   const handleUpdate = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch(`http://localhost:5000/blog/${id}`, {
+    fetch(`https://myblog-5gjx.onrender.com/blog/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

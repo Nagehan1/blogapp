@@ -26,24 +26,24 @@ function Register() {
             password,
             is_admin: false
         }
-        fetch("http://localhost:5000/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
+        fetch("https://myblog-5gjx.onrender.com/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
         })
-        .then(res => res.json())
-        .then(data => {
+          .then((res) => res.json())
+          .then((data) => {
             if (data.message === "User created") {
-                window.location.href = "/login";
-            } else if (data.errors[0].msg=== "User already exists") {
-                alert("User already exists");
+              window.location.href = "/login";
+            } else if (data.errors[0].msg === "User already exists") {
+              alert("User already exists");
             } else {
-                alert("Fill in all fields");
+              alert("Fill in all fields");
             }
-        })
-        .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
     };
     const handleBack = (e) => {
         e.preventDefault();

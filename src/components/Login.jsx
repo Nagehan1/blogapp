@@ -23,26 +23,26 @@ const Login = () => {
             email,
             password
         }
-        fetch("http://localhost:5000/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
+        fetch("https://myblog-5gjx.onrender.com/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
         })
-        .then(res => res.json())
-        .then(data => {
+          .then((res) => res.json())
+          .then((data) => {
             if (data.message === "User logged in") {
-                localStorage.setItem("token", data.data.token);
-                localStorage.setItem("is_admin", data.data.is_admin);
-                window.location.href = "/home";
-            } else if (data.errors[0].msg=== "Invalid credentials") {
-                alert("Invalid credentials");
+              localStorage.setItem("token", data.data.token);
+              localStorage.setItem("is_admin", data.data.is_admin);
+              window.location.href = "/home";
+            } else if (data.errors[0].msg === "Invalid credentials") {
+              alert("Invalid credentials");
             } else {
-                alert("Fill in all fields");
+              alert("Fill in all fields");
             }
-        })
-            .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
     };
     console.log(localStorage);
     return (

@@ -30,7 +30,7 @@ const Read = () => {
   }, [id]);
   console.log(post);
   const handleDelete = () => {
-    fetch(`http://localhost:5000/blog/${id}`, {
+    fetch(`https://myblog-5gjx.onrender.com/blog/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
