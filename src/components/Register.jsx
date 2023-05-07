@@ -26,7 +26,7 @@ function Register() {
             password,
             is_admin: false
         }
-        fetch("https://myblog-5gjx.onrender.com/register", {
+        fetch("https://myblog-3rwk.onrender.com/api/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -8,7 +8,7 @@ function NavBar() {
         localStorage.clear();
         localStorage.removeItem("token");
         localStorage.removeItem("is_admin");
-        window.location.href = "/login";
+        window.location.href = "https://myblog-3rwk.onrender.com/login";
     };
     return (
       <div>
@@ -18,7 +18,7 @@ function NavBar() {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Item>
-                  <NavLink  to="/home" className="nav-link">
+                  <NavLink to="/home" className="nav-link">
                     Home
                   </NavLink>
                 </Nav.Item>
@@ -56,7 +56,11 @@ function NavBar() {
                   </NavLink>
                 </Nav.Item> */}
                 <Nav.Item>
-                  <NavLink to="/logout" className="nav-link" onClick={logout}>
+                  <NavLink
+                    to="https://myblog-3rwk.onrender.com/logout"
+                    className="nav-link"
+                    onClick={logout}
+                  >
                     Logout
                   </NavLink>
                 </Nav.Item>

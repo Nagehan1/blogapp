@@ -12,7 +12,7 @@ function Write() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch("https://myblog-5gjx.onrender.com/blog", {
+    fetch("https://myblog-3rwk.onrender.com/api/blog", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

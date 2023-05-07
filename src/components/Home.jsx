@@ -10,7 +10,7 @@ function Home() {
   // Fetch posts from API endpoint blog and use auth token from local storage
   React.useEffect(() => {
     //search for posts
-    fetch(`https://myblog-5gjx.onrender.com/blog?search=${search}`, {
+    fetch(`https://myblog-3rwk.onrender.com/api/blog?search=${search}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

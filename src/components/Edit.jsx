@@ -16,7 +16,7 @@ const Edit = (props) => {
   const [post, setPost] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
-    fetch(`https://myblog-5gjx.onrender.com/blog/${id}`, {
+    fetch(`https://myblog-3rwk.onrender.com/api/blog/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const Edit = (props) => {
   const handleUpdate = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch(`https://myblog-5gjx.onrender.com/blog/${id}`, {
+    fetch(`https://myblog-3rwk.onrender.com/api/blog/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const Edit = (props) => {
     setTitle("");
     setContent("");
     setAuthor("");
-    window.location.href = "/home";
+    window.location.href = "https://myblog-3rwk.onrender.com/home";
   };
   const handleTitle = (e) => {
     e.preventDefault();

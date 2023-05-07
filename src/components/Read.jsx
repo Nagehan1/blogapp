@@ -12,7 +12,7 @@ const Read = () => {
   // Fetch posts from API endpoint blog and use auth token from local storage
   //and take the reader to the single post page
   React.useEffect(() => {
-    fetch(`http://localhost:5000/blog/${id}`, {
+    fetch(`https://myblog-3rwk.onrender.com/api/blog/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const Read = () => {
   }, [id]);
   console.log(post);
   const handleDelete = () => {
-    fetch(`https://myblog-5gjx.onrender.com/blog/${id}`, {
+    fetch(`https://myblog-3rwk.onrender.com/api/blog/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
