@@ -8,7 +8,7 @@ function NavBar() {
         localStorage.clear();
         localStorage.removeItem("token");
         localStorage.removeItem("is_admin");
-        window.location.href = "https://myblog-3rwk.onrender.com/login";
+        window.location.href = "/login";
     };
     return (
       <div>
@@ -57,7 +57,7 @@ function NavBar() {
                 </Nav.Item> */}
                 <Nav.Item>
                   <NavLink
-                    to="https://myblog-3rwk.onrender.com/logout"
+                    to="/logout"
                     className="nav-link"
                     onClick={logout}
                   >

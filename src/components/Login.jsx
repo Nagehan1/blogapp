@@ -15,7 +15,7 @@ const Login = () => {
     }
     const handleBack = (e) => {
         e.preventDefault();
-        window.location.href = "https://myblog-3rwk.onrender.com/register";
+        window.location.href = "/register";
     }
     const login = (e) => {
         e.preventDefault();
@@ -23,7 +23,7 @@ const Login = () => {
             email,
             password
         }
-        fetch("https://myblog-3rwk.onrender.com/api/login", {
+        fetch("https://api-p664.onrender.com/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

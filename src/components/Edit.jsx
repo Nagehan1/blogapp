@@ -41,7 +41,7 @@ const Edit = (props) => {
   const handleUpdate = (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch(`https://myblog-3rwk.onrender.com/api/blog/${id}`, {
+    fetch(`https://api-p664.onrender.com/blog/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const Edit = (props) => {
     setTitle("");
     setContent("");
     setAuthor("");
-    window.location.href = "https://myblog-3rwk.onrender.com/home";
+    window.location.href = "/home";
   };
   const handleTitle = (e) => {
     e.preventDefault();

@@ -6,7 +6,7 @@ function Single(props) {
   const [loading, setLoading] = React.useState(false);
   const handleClick = () => {
     setLoading(true);
-    window.location.href = `https://myblog-3rwk.onrender.com/read/${props.id}`;
+    window.location.href = `/read/${props.id}`;
   };
   return (
     <div>
