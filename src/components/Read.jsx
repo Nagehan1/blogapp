@@ -64,7 +64,7 @@ const Read = () => {
               </h5>
             ) : (
               <div>
-                {localStorage.getItem("is_admin") === "true" ? (
+                {localStorage.getItem("role") === "admin" ? (
                   <div className="d-flex justify-content-end">
                     <Button
                       style={{ margin: "1px" }}

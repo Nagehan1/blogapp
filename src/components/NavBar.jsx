@@ -7,12 +7,12 @@ function NavBar() {
   const logout = () => {
         localStorage.clear();
         localStorage.removeItem("token");
-        localStorage.removeItem("is_admin");
+        localStorage.removeItem("role");
         window.location.href = "/login";
     };
     return (
       <div>
-        {localStorage.getItem("is_admin") === "true" ? (
+        {localStorage.getItem("role") === "true" ? (
           <Navbar bg="dark" variant="dark" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">

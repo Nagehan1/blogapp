@@ -21,11 +21,11 @@ function Register() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const user = {
-            username,
-            email,
-            password,
-            is_admin: false
-        }
+          username,
+          email,
+          password,
+          role: "admin",
+        };
         fetch("https://api-p664.onrender.com/register", {
           method: "POST",
           headers: {
