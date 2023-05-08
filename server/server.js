@@ -8,7 +8,24 @@ const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const { query } = require("express");
 const secret = "secret";
-app.use(cors());
+app.use(
+  cors({
+    accessControlAllowOrigin: "*",
+    accessControlAllowMethods: "GET, POST, PUT, DELETE, OPTIONS",
+    accessControlAllowHeaders:
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+    accessControlAllowCredentials: true,
+  })
+);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 app.use(express.json());
 //try to connect to the database and use try catch to catch any errors
 const pool = new Pool({
