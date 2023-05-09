@@ -12,7 +12,7 @@ function NavBar() {
     };
     return (
       <div>
-        {localStorage.getItem("role") === "true" ? (
+        {localStorage.getItem("role") === "admin" ? (
           <Navbar bg="dark" variant="dark" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">

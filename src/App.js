@@ -10,6 +10,8 @@ import { Route, Routes } from "react-router";
 // import {BrowserRouter} from "react-router-dom";
 // import AboutMe from './components/AboutMe';
 import './App.css';
+import { render } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   return (
