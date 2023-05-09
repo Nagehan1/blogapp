@@ -24,7 +24,7 @@ function Register() {
           username,
           email,
           password,
-          role: "admin",
+          role: "user",
         };
         fetch("https://api-p664.onrender.com/register", {
           method: "POST",
