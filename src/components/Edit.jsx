@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import NavBar from "./NavBar";
 import { Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -16,7 +16,7 @@ const Edit = (props) => {
   const [post, setPost] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
-    fetch(`https://blogapi-786t.onrender.com/blog/${id}`, {
+    fetch(`https://api-p664.onrender.com/blog/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const Edit = (props) => {
   };
   return (
     <div>
-      <Navbar />
+      <NavBar />
       <div>
         {localStorage.getItem("role") !== "admin" ? (
           (window.location.href = "/home")

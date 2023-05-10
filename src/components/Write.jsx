@@ -1,6 +1,6 @@
 //api-p664.onrender.com/blog
 import React from "react";
-import Navbar from "../components/Navbar";
+import NavBar from "./NavBar";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -57,7 +57,7 @@ function Write() {
   };
   return (
     <div>
-      <Navbar />
+      <NavBar />
       {localStorage.getItem("role") !== "admin" ? (
         (window.location.href = "/home")
       ) : (
