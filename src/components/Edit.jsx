@@ -1,6 +1,6 @@
 import React from "react";
-import NavBar from "./NavBar";
-
+import Navbar from "../components/Navbar";
+import { Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
@@ -16,7 +16,7 @@ const Edit = (props) => {
   const [post, setPost] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
-    fetch(`https://api-p664.onrender.com/blog/${id}`, {
+    fetch(`https://blogapi-786t.onrender.com/blog/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ const Edit = (props) => {
         setLoading(false);
       })
       .catch((err) => console.log(err));
-  }, [id]);
+  }, []);
   console.log(post);
   //use put endpoint to update the post
   const handleUpdate = (e) => {
@@ -86,68 +86,74 @@ const Edit = (props) => {
   };
   return (
     <div>
-      <NavBar />
-      {loading ? (
-        <h5 style={{ color: "goldenrod", textAlign: "center" }}>loading...</h5>
-      ) : (
-        <div className="container">
-          <div>
-            <h1 style={{ color: "goldenrod", textAlign: "center" }}>
-              Edit post
-            </h1>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <form onSubmit={handleUpdate}>
-                <div className="form-group">
-                  <label htmlFor="title">Title</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="title"
-                    value={title}
-                    onChange={handleTitle}
-                  />
+      <Navbar />
+      <div>
+        {localStorage.getItem("role") !== "admin" ? (
+          (window.location.href = "/home")
+        ) : loading ? (
+          <h5 style={{ color: "goldenrod", textAlign: "center" }}>
+            loading...
+          </h5>
+        ) : (
+          <div className="container">
+            <div>
+              <h1 style={{ color: "goldenrod", textAlign: "center" }}>
+                Edit post
+              </h1>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <form onSubmit={handleUpdate}>
                   <div className="form-group">
-                    <label htmlFor="content">Content</label>
-                    <textarea
+                    <label htmlFor="title">Title</label>
+                    <input
+                      type="text"
                       className="form-control"
-                      id="content"
-                      value={content}
-                      rows="3"
-                      onChange={handleContent}
-                    ></textarea>
+                      id="title"
+                      value={title}
+                      onChange={handleTitle}
+                    />
                     <div className="form-group">
-                      <label htmlFor="author">Author</label>
-                      <input
-                        type="text"
+                      <label htmlFor="content">Content</label>
+                      <textarea
                         className="form-control"
-                        value={author}
-                        id="author"
-                        onChange={handleAuthor}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="image_url">Image url</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={image_url}
-                        id="image_url"
-                        onChange={handleImage_url}
-                      />
+                        id="content"
+                        value={content}
+                        rows="3"
+                        onChange={handleContent}
+                      ></textarea>
+                      <div className="form-group">
+                        <label htmlFor="author">Author</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={author}
+                          id="author"
+                          onChange={handleAuthor}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="image_url">Image url</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={image_url}
+                          id="image_url"
+                          onChange={handleImage_url}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <br />
-                <Button type="submit" variant={"outline-warning"}>
-                  <FontAwesomeIcon icon={faPaperPlane} />
-                </Button>
-              </form>
+                  <br />
+                  <Button type="submit" variant={"outline-warning"}>
+                    <FontAwesomeIcon icon={faPaperPlane} />
+                  </Button>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
