@@ -1,5 +1,6 @@
+//api-p664.onrender.com/blog
 import React from "react";
-import NavBar from "./NavBar";
+import Navbar from "../components/Navbar";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -56,63 +57,67 @@ function Write() {
   };
   return (
     <div>
-      <NavBar />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <h1 style={{ color: "goldenrod", textAlign: "center" }}>
-              Write a post
-            </h1>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="title">Title</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  onChange={handleTitle}
-                />
+      <Navbar />
+      {localStorage.getItem("role") !== "admin" ? (
+        (window.location.href = "/home")
+      ) : (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h1 style={{ color: "goldenrod", textAlign: "center" }}>
+                Write a post
+              </h1>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label htmlFor="content">Content</label>
-                  <textarea
+                  <label htmlFor="title">Title</label>
+                  <input
+                    type="text"
                     className="form-control"
-                    id="content"
-                    rows="3"
-                    onChange={handleContent}
-                  ></textarea>
+                    id="title"
+                    onChange={handleTitle}
+                  />
                   <div className="form-group">
-                    <label htmlFor="author">Author</label>
-                    <input
-                      type="text"
+                    <label htmlFor="content">Content</label>
+                    <textarea
                       className="form-control"
-                      id="author"
-                      onChange={handleAuthor}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="image_url">Image url</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="image_url"
-                      onChange={handleImage_url}
-                    />
+                      id="content"
+                      rows="3"
+                      onChange={handleContent}
+                    ></textarea>
+                    <div className="form-group">
+                      <label htmlFor="author">Author</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="author"
+                        onChange={handleAuthor}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="image_url">Image url</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="image_url"
+                        onChange={handleImage_url}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <br />
-              <Button type="submit" variant={"outline-warning"}>
-                <FontAwesomeIcon icon={faPaperPlane} />
-              </Button>
-            </form>
-            {loading ? (
-              <h5 style={{ color: "goldenrod", textAlign: "center" }}>
-                loading...
-              </h5>
-            ) : null}
+                <br />
+                <Button type="submit" variant={"outline-warning"}>
+                  <FontAwesomeIcon icon={faPaperPlane} />
+                </Button>
+              </form>
+              {loading ? (
+                <h5 style={{ color: "goldenrod", textAlign: "center" }}>
+                  loading...
+                </h5>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
