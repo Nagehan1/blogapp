@@ -16,7 +16,7 @@ const Edit = (props) => {
   const [post, setPost] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
-    fetch(`https://myblog-3rwk.onrender.com/api/blog/${id}`, {
+    fetch(`https://api-p664.onrender.com/blog/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
